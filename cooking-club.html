@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthy Recipes with Voice Guide</title>
+    <link rel="stylesheet" href="cooking.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #339b4c;
+            color: white;
+        }
+        button:disabled {
+            background-color: #ccc;
+        }
+        .progress-bar {
+            width: 100%;
+            background: #ddd;
+            height: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            position: relative;
+        }
+        .progress {
+            height: 100%;
+            width: 0%;
+            background: #28a745;
+            border-radius: 10px;
+            transition: width 0.5s;
+            #recipeDetails { margin-top: 20px; text-align: left; }
+            #starRating span { cursor: pointer; font-size: 24px; color: gold; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Healthy Recipes with Voice Guide</h1>
+        <p>Select a recipe:</p>
+        <select id="recipeSelect"></select>
+        <button onclick="startRecipe()">Start Recipe</button>
+        <button id="nextStep" onclick="nextStep()" disabled>Next Step</button>
+        <p id="stepText"></p>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+
+        <div id="recipeDetails">
+            <h2 id="recipeTitle"></h2>
+            <p id="recipeBenefits"></p>
+            
+            <label for="recipeImage">Upload Your Dish:</label>
+            <input type="file" id="recipeImage" accept="image/*" onchange="displayImage()">
+            <div id="uploadedImageContainer"></div>
+            
+            <h3>Rate this Recipe:</h3>
+            <input type="file" id="dishUpload">
+
+<div id="ratingSection">
+    <span class="rating-star">⭐</span>
+    <span class="rating-star">⭐</span>
+    <span class="rating-star">⭐</span>
+    <span class="rating-star">⭐</span>
+    <span class="rating-star">⭐</span>
+</div>
+
+
+
+    <h3>Comments:</h3>
+    <textarea id="commentBox" placeholder="Leave a comment..."></textarea>
+    <button onclick="postComment()">Post</button>
+    <ul id="commentsList"></ul>
+    <p>🌟 Your Points: <span class="points-display">0</span></p>
+
+</div>
+</div> 
+
+    <script>
+        const recipes = [
+            { name: "Moong Dal & Moringa Soup", steps: ["Take the ingridents 1/2 cup moong dal,1 cup fresh drumstick leaves, 3 cups of water, 1/2 tablespoon tumeric powder, 1/2 tablespoon cumin seeds, 1/2 tablespoon black pepper , salt, 1 spoon ghee", "Wash moong dal, add water, turmeric, and salt. Cook until soft (15-20 mins)", "Rinse and add moringa leaves to the dal, simmer for 5 mins", "Blend the mixture, heat ghee, add cumin seeds, pour over the soup, add black pepper" ,"Adjust salt if needed and Serve warm."], benefits: "Boosts immunity, rich in iron." },
+            { name: "Flaxseed Roti", steps: ["Take the ingridents 1 cup wheat flour, 2 tablespoon flaxseed powder, 1/2 tablespoon salt, 1/2 cup water ", "Mix whole wheat flour with flaxseed powder, and salt add water, knead and rest for 15 mins", "Roll into rotis and cook on a tawa.", "Serve with ghee."], benefits: "High in omega-3, great for heart health." },
+            { name: "Lotus Stem Curry", steps: ["Take the ingridents 1 cup lotus stem, 1 medium onion, 1 tomato(pureed), 1/2 cup coconut milk, 1/2 tablespoon tumeric powder, 1 tablespoon cumin seeds, 1 tablespoon coriander powder, 1/2 tablespoon garam masala, 1 tablespoon ginger-garlic paste, salt and oil", "Slice lotus stems, rinse, and boil it for 5-7 mins, heat oil, add cumin , onion , ginger-garlic paste , tomato puree and cook well.", "Add coconut milk and garam masala.", "Serve with rice or roti."], benefits: "Improves digestion, rich in fiber." },
+            { name: "Fenugreek Sprouts Salad", steps: ["Take the ingridents 1/2 cup fenugreek spruts(soaked overnight), 1/2 cucumber chopped, 1 tablespoon lemon juice, salt", "Rinse and drain soaked fenugrek sprouts and mix soaked fenugreek sprouts with cucumber.", "Add lemon juice and toss well and serve fresh."], benefits: "Controls blood sugar, good for digestion." },
+            { name: "Karela Thepla (Bitter Gourd Paratha)", steps: ["1 cup wheat flour, 1/2 grated bitter gourd, 1/2 tablespoon tumeric powder, 1/2 tablespoon cumin powder, salt, water", " Mix flour, grate bitter gourd, tumeric, cumin, salt", "Add water gradually and knead till the dough is soft let it rest for 10 min.", "Roll into thin and cook on a tawa untill golden brown and serve warm with curd or pickle."], benefits: "Regulates blood sugar, liver-friendly." },
+            { name: "Sattu Drink", steps: ["Take the ingridents 2 tablespoon roasted gram flour, 1 cup water, 1 tablespoon jaggery , salt", "Mix roasted gram flour with water.", "Add jaggery and serve chilled."], benefits: "Cooling for the body, protein-rich." },
+            { name: "Ajwain Roti (Carom Seed Flatbread)", steps: ["Take the ingridents 1 cup wheat flour, 1 tablespoon ajwain, 1/2 tablespoon salt, 1/2 cup water, 1 tablespoon ghee", "Mix whole wheat flour with ajwain seeds, and salt add water gradually, and knead into soft dough.", "Roll into rotis and cook.", "Apply ghee and serve warm."], benefits: "Aids digestion, relieves bloating." },
+            { name: "Methi Rice (Fenugreek Rice)", steps: ["Take the ingridents 1 cup cooked rice, 1/2 cup fenugreek leaves, 2 garlic cloves, 1 tablespoon ghee, 1/2 tablespoon cumin seeds, salt", "Heat ghee, add cumin seeds, garlic, and methi leaves saute intil leaves are soften", "Add cooked rice, mix well, and cook for 2 mins"], benefits: "Great for diabetes, rich in fiber." },
+            { name: "Jowar Upma", steps: ["1/2 cup jowar, 1 cup mixed veggies, 1 tablespoon mustard, 1 tablespoon ghee, salt", "Dry roast jowar flour,heat oil, add mustard seeds and add veggies saute well mix in roasted jowar flour and water", "Serve with curd."], benefits: "Gluten-free, high in fiber." },
+            { name: "Tamarind Poha", steps: ["Take the ingridents 1 cup poha, 2 tablespoon tamarind pulp, 1/2 tablespoon mustard seeds, 1 green chili chopped, 1 tablespoon oil, salt", "Rinse poha and soak poha set it aside for few minutes, heat oil, add mustard seeds, green chili and tamarind pulp cook for 2 mins.", "Add poha, mix well and cook for another 2 mins done serve warm."], benefits: "Rich in antioxidants, aids digestion." },
+            { name: "Beetroot Raita", steps: ["Take the ingridents, 1 small beetroot grated, 1 cup curd, 1/2 tablespoon cumin powder, salt", "Grate beetroot, mix with curd and cumin.", "Chill and serve."], benefits: "Improves hemoglobin, cools the body." },
+            { name: "Avocado Toast", steps: ["Take the ingridents, 1 slice whole grain bread, 1/2 avocado, mashed, 1 tablespoon flaxseeds, a pinch of salt & pepper", "Toast whole grain bread, spread with mashed avocado.", "Sprinkle flaxseeds, salt and pepper and  serve fresh."], benefits: "Healthy fats, good for heart health." },
+            { name: "Chia Seed Pudding", steps: ["Take the ingriendents, 2 tablespoon chia seeds, 1 cup almond milk, 1 tablespoon honey, 1 tablespoon chopped nuts", "Soak chia seeds in almond milk refrigerate overnight.", "Stir well, add honey and nuts before serving."], benefits: "High in omega-3, good for digestion." },
+            { name: "Zucchini Noodles", steps: ["Take the ingridents, 2 medium zucchinis, 1 cup cherry tomatoes, 1 tablespoon olive oil, salt to taste", "Use spiralizeto turn zucchini into noodles.", "Heat olive oil,tossin zucchini noodles and cherry tomatoes, saute for 2 minutes", "Serve warm with a sprinkle of salt."], benefits: "Low-carb, great for weight management." },
+            { name: "Lentil & Spinach Soup", steps: ["Take the ingridents, 1/2 cup lentils, 1 cup spinach, 1/2 tablespoon tumeric, 1/2 tablespoon cumin powder, salt to taste", "Cook lentils in water until soft, add spinach, tumeric, cumin, and mild salt, cook for 5 min", "Blend into a smooth texture and serve warm."], benefits: "High in iron and protein." },
+            { name: "Greek Yogurt with Nuts", steps: ["Take the ingriedents, 1 cup greek yogurt, 2 tablespoon walnuts chopped finely, 1 tablespoon honey", "Mix Greek yogurt with walnuts and honey.", "Serve chilled for a refreshing snack."], benefits: "High in protein, supports digestion." },
+            { name: "Baked Sweet Potato Fries", steps: ["Take the ingridents, 2 medium, 1 tablespoon olive oil, 1/2 tablespoon sea salt", "Cut sweet potatoes into thin strips, Toss with olive and, bake at 200 degree celsius, for 20-25 minutes.", "Sprinkle sea salt and serve."], benefits: "High in fiber, good for diabetics." },
+            { name: "Quinoa Salad", steps: ["Take the ingridents, 1/2 cup quinoa, 1/2 cup bell peppers chopped, 1/4 cup feta cheese(crumbled), 1 tablespoon olive oil, salt", "Boil quinoa, in water until soft, let it cool,  mix with bell peppers and feta cheese.", "Drizzle with olive oil, toss well, and serve."], benefits: "Protein-packed, rich in fiber." },
+            { name: "Broccoli & Almond Soup", steps: ["Take the ingridents, 1 cup broccoli(chopped), 1/2 cup almond milk, 1/2 tablespoon pepper, salt", "Boil broccoli, in water until softens, blend with almond milk.", "Add salt and black pepper, mix well, and serve."], benefits: "Brain-boosting, high in vitamins." },
+            { name: "Oats & Banana Smoothie", steps: ["Take the ingridents, 1/2 cup oats, 1 ripe banana, 1 cup milk, 1 tablespoon honey", "Blend oats, banana, and milk until smooth.", "Pour into glass, and serve chilled."], benefits: "High in fiber, good for digestion." },
+            { name: "Stuffed Portobello Mushrooms", steps: ["Take the ingridents, 2 large portbello mushrooms, 1/2 cup cottage cheese(crumbled), 1/2 tablespoon mixed herbs, salt", "Clean and remove stems, from mushrooms, fill mushrooms with cottage cheese, season with herbs", "Bake at 180 degree celsius, for 15 min, and serve warm."], benefits: "Low in calories, nutrient-dense." },
+            { name: "Spinach & Feta Omelette", steps: ["Take the ingridents, 2 eggs, 1/2 cup spinach chopped, 1/4 cup feta cheese crumbled, 1 tablespoon olive oil, salt and pepper", "Whisk eggs in a bowl, Heat oil in a pan, pour eggs, add spinach and feta cheese.", "Cook into an omelette and serve."], benefits: "High in protein, boosts energy." },
+            { name: "Cucumber & Hummus Wrap", steps: ["Take the ingridents, 1 wheat tortilla, 2 tablespoon hummus, 1/2 cup cucumber thinly sliced", "Spread hummus on a whole wheat tortilla.", "Add sliced cucumber and roll up, and cut into half"], benefits: "Refreshing and high in fiber." },
+            { name: "Berry Chia Smoothie", steps: ["Take the ingridents, 1/2 cup mixed berries( strawberries, blueberries, raspberries), 1 tablespoon chia seeds, 1/2 cup yogrut, 1/2 cup milk", "Blend mixed berries, chia seeds, yogurt, and milk until smooth.", "Pour into, a glass , Serve chilled."], benefits: "High in antioxidants, great for skin." },
+            { name: "Roasted Chickpea Snack", steps: ["Take the ingridents, 1 cup chickpeas (cooked & drained), 1 tablespoon olive oil, 1/2 tablespoon paprika, 1/2 tablespoon cumin powder, salt", "Roast chickpeas with olive oil, parika, cumin, and salt", "Spread on a , baking sheet, roast for 20-25 min until crispy, and serve crunchy."], benefits: "Rich in protein, great for gut health." },
+            { name: "Carrot & Ginger Soup", steps: ["Take the ingridents, 2 cups carrot chopped, 1 inch ginger grated, 2 cups water or vegetable broath, 1/2 tablespoon black paper, salt", "Cook carrots with ginger, in water until soft.", "Blend until, smooth and creany", " Add salt, black pepper, mix well and serve warm."], benefits: "Boosts immunity, great for digestion." },
+            { name: "Almond Butter & Banana Toast", steps: ["Take the ingridents, 1 slice whole grain bread, 1 tablespoon almond butter, 1/2 banana sliced", "Lightly toast, whole grain bread ,spread almond butter on whole grain toast.", "Top with banana slices and serve, immediately for a quick, energy-boosting snack."], benefits: "Healthy fats, good for energy." },
+            { name: "Brown Rice & Grilled Veggies", steps: ["Take the ingridents, 1/2 cup brown rice, 1/2 cup mixed vegetables( zucchini, bell peppers, carrots), 1 tablespoon olive oil, 1/2 tablespoon oregano, salt", "Cook brown rice, untill tender and set aside , now  grill veggies with olive oil, season with oregano", "Plate brown rice, with grilled veggies, with olive oil, and serve warm"], benefits: "High in fiber, keeps you full longer." },
+        ];
+
+        
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            const recipeSelect = document.getElementById("recipeSelect");
+            recipes.forEach((recipe, index) => {
+                let option = document.createElement("option");
+                option.value = index;
+                option.textContent = recipe.name;
+                recipeSelect.appendChild(option);
+            });
+            recipeSelect.addEventListener("change", updateRecipeDetails);
+        });
+        
+        function updateRecipeDetails() {
+            let selectedRecipe = recipes[document.getElementById("recipeSelect").value];
+            document.getElementById("recipeTitle").textContent = selectedRecipe.name;
+            document.getElementById("recipeBenefits").textContent = selectedRecipe.benefits;
+        }
+        
+        function startRecipe() {
+            let selectedRecipe = recipes[document.getElementById("recipeSelect").value];
+            steps = selectedRecipe.steps;
+            currentStep = 0;
+            document.getElementById("stepText").textContent = steps[currentStep];
+            document.getElementById("nextStep").disabled = false;
+            document.getElementById("progress").style.width = "0%";
+        }
+        
+        function nextStep() {
+            currentStep++;
+            if (currentStep < steps.length) {
+                document.getElementById("stepText").textContent = steps[currentStep];
+                document.getElementById("progress").style.width = (currentStep / steps.length) * 100 + "%";
+            } else {
+                alert("Recipe completed!");
+                document.getElementById("nextStep").disabled = true;
+            }
+        }
+        
+        function displayImage() {
+            let file = document.getElementById("recipeImage").files[0];
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById("uploadedImageContainer").innerHTML = `<img src="${e.target.result}" width="100%">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        function rateRecipe(stars) {
+            let starsElements = document.getElementById("starRating").children;
+            for (let i = 0; i < 5; i++) {
+                starsElements[i].style.color = i < stars ? "gold" : "gray";
+            }
+        }
+        
+        function postComment() {
+            let commentText = document.getElementById("commentBox").value;
+            if (!commentText.trim()) return;
+            let commentList = document.getElementById("commentsList");
+            let li = document.createElement("li");
+            li.textContent = commentText;
+            commentList.appendChild(li);
+            document.getElementById("commentBox").value = "";
+        }
+        let currentRecipe = null;
+        let stepIndex = 0;
+        let synth = window.speechSynthesis;
+
+        function populateRecipeDropdown() {
+            const select = document.getElementById("recipeSelect");
+            recipes.forEach((recipe, index) => {
+                const option = document.createElement("option");
+                option.value = index;
+                option.textContent = recipe.name;
+                select.appendChild(option);
+            });
+        }
+
+        function startRecipe() {
+            stepIndex = 0;
+            currentRecipe = recipes[document.getElementById("recipeSelect").value];
+            document.getElementById("stepText").innerText = currentRecipe.steps[stepIndex];
+            speakText(currentRecipe.steps[stepIndex]);
+            document.getElementById("nextStep").disabled = false;
+            updateProgress();
+        }
+
+        function nextStep() {
+            if (stepIndex < currentRecipe.steps.length - 1) {
+                stepIndex++;
+                document.getElementById("stepText").innerText = currentRecipe.steps[stepIndex];
+                speakText(currentRecipe.steps[stepIndex]);
+                updateProgress();
+            } else {
+                document.getElementById("nextStep").disabled = true;
+                speakText("Recipe completed! Enjoy your meal.");
+            }
+        }
+
+        function speakText(text) {
+            let utterance = new SpeechSynthesisUtterance(text);
+            synth.speak(utterance);
+        }
+
+        function updateProgress() {
+            let progressPercent = ((stepIndex + 1) / currentRecipe.steps.length) * 100;
+            document.getElementById("progress").style.width = progressPercent + "%";
+        }
+
+        // Populate recipe dropdown on page load
+        populateRecipeDropdown();
+    </script>
+     <div class="points-tracker">
+     
+    </div>
+</div>
+
+<script src="cooking.js"></script>
+<scr
+
+</body>
+</html>
+

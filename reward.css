@@ -1,0 +1,73 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: linear-gradient(to right, #f1b2bd, #f79055);
+    margin: 0;
+    padding: 20px;
+}
+
+.reward-container {
+    max-width: 600px;
+    background: white;
+    padding: 20px;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    color: #ff5733;
+}
+
+button {
+    background-color: #a1a1fa;
+    color: rgb(44, 2, 2);
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #97f2e3;
+}
+
+.hidden {
+    display: none;
+}
+
+.reward-box {
+    background: #ffebcd;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.reward-tracking {
+    background: #fff0f5;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+input {
+    padding: 10px;
+    width: 80%;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#gold-shower {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('https://i.imgur.com/IbghKX8.gif') center/cover;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}

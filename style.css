@@ -1,0 +1,83 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    background-color: #f2f2f2;
+    padding: 10px 0;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(116, 170, 176);
+    height: 200px;
+}
+
+.logo1 {
+    text-decoration: none;
+}
+
+.logo1 {
+    background: url('logo1.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+.logo1 img {
+    width: 100%; /* Ensures the image fits inside */
+    height: auto;
+}
+
+.hero {
+    background-image: url("hero-background.webp"); 
+    background-position: center;
+    padding: 100px 0;
+    text-align: center;
+    opacity:0.9;
+    height:60vh;
+}
+
+h1 {
+    color: black;
+    font-size: 48px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+p {
+    color: rgb(40, 39, 39);
+    font-size: 20px;
+    line-height: 1.5;
+    margin-bottom: 30px;
+    align-items: center;
+}
+
+.get-started {
+    background-color: #fff;
+    color: #007bff;
+    padding: 15px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    align-items: center;
+}
+.get-started:hover {
+    background-color: #b3dbe8;
+    color: black;
+}    
+
+footer {
+    background-color: lightskyblue;
+    color: #c3c1c1;
+    font-size: 12px;
+    padding: 20px 0;
+    text-align: center;
+}
