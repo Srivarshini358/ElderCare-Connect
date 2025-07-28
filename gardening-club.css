@@ -1,0 +1,67 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #e8f5e9;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+h1 {
+  color: #2e7d32;
+}
+
+.points-container {
+  background: #4caf50;
+  color: white;
+  padding: 10px;
+  font-size: 18px;
+  display: inline-block;
+  border-radius: 5px;
+}
+
+.activity-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.activity {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+button {
+  background: #43a047;
+  color: white;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  margin-top: 5px;
+  border-radius: 5px;
+}
+
+button:hover {
+  background: #2e7d32;
+}
+
+#leaderboard-list {
+  list-style: none;
+  padding: 0;
+}
+
+#leaderboard-list li {
+  background: #c8e6c9;
+  margin: 5px;
+  padding: 8px;
+  border-radius: 5px;
+}
+

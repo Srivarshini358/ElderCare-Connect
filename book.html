@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="logo1.jpg" type="image/x-icon">
+    <title>Book Club</title>
+    <link rel="stylesheet" href="bookclub.css">
+    <script defer src="bookclub.js"></script>
+</head>
+<body>
+    <div class="bookclub-container">
+        <h1>Welcome to the Book Club 📚</h1>
+        <p>Click on a book cover to start reading, or join the discussion below:</p>
+
+        <div class="book-list">
+            <!-- Book Template -->
+            <script>
+                const books = [
+                    { id: "great-train", title: "The Great Train Journey", author: "Ruskin Bond", img: "great.jpg", link: "https://pubhtml5.com/bbar/rtcv/The_Great_Train_Journey/" },
+                    { id: "best-ruskin", title: "The Best Of Ruskin Bond", author: "Ruskin Bond", img: "the best.jpg", link: "https://pubhtml5.com/ppxm/qvir/The_best_of_Ruskin_Bond/" },
+                    { id: "here-there", title: "Here, There and Everywhere", author: "Sudha Murthy", img: "here.jpeg", link: "https://pubhtml5.com/bbar/lakl/basic/" },
+                    { id: "grandparents", title: "Grandparents Bag of Stories", author: "Sudha Murthy", img: "grandparents.jpeg", link: "https://pubhtml5.com/ppxm/cjpp/Grandparents_Bag_of_Stories_(Sudha_Murty)/4" },
+                    { id: "meluha", title: "The Immortals of Meluha", author: "Amish Tripathi", img: "meluha.jpg", link: "https://pubhtml5.com/vgusw/fqnl/Shiva_trilogy_book01_the_immortals_Of_meluha/" },
+                    { id: "magic-lost-temple", title: "The Magic of the Lost Temple", author: "Sudha Murthy", img: "magic-lost-temple.jpg", link: "https://pubhtml5.com/bbar/jlvo/The_Magic_of_the_Lost_Temple/1" },
+                    { id: "sita", title: "Sita: Daughter of the Earth", author: "", img: "sita.jpg", link: "https://pubhtml5.com/bbar/iepw/Sita_Daughter_of_the_Earth/" },
+                    { id: "magic-drum", title: "Magic Drum and Other Favourite Stories", author: "", img: "drum.jpg", link: "https://pubhtml5.com/hmeo/kmdh/The_Magic_Drum_%26amp%3B_Other_Favourite_Stories/94" }
+                ];
+            </script>
+
+            <div id="book-list"></div>
+        </div>
+
+        <div class="points-container">
+            <p><strong>Your Points:</strong> <span id="userPoints">0</span></p>
+        </div>
+    </div>
+
+    <script>
+        const bookListContainer = document.getElementById("book-list");
+
+        books.forEach(book => {
+            const bookItem = document.createElement("div");
+            bookItem.classList.add("book-item");
+            bookItem.innerHTML = `
+                <a href="${book.link}" target="_blank">
+                    <img src="${book.img}" alt="${book.title}">
+                </a>
+                <div class="book-info">
+                    <p>${book.author ? book.author + " - " : ""}${book.title}</p>
+                    <button onclick="startReading('${book.id}')">Start Reading</button>
+                    <button onclick="finishReading('${book.id}')">Finish Reading</button>
+                    <p><strong>Time Spent:</strong> <span id="${book.id}-timer">0</span> seconds</p>
+                    <button class="discuss-btn" onclick="toggleDiscussion('${book.id}')">Join the Discussion</button>
+                    <div id="${book.id}-discussion" class="discussion-area">
+                        <textarea id="${book.id}-input" placeholder="Share your thoughts..."></textarea>
+                        <button onclick="submitDiscussion('${book.id}')">Submit & Earn Points</button>
+                        <div id="${book.id}-submissions"></div>
+                    </div>
+                </div>
+            `;
+            bookListContainer.appendChild(bookItem);
+        });
+
+        let timers = {};
+
+        function startReading(bookId) {
+            if (!timers[bookId]) {
+                timers[bookId] = { startTime: Date.now(), interval: setInterval(() => {
+                    const elapsedTime = Math.floor((Date.now() - timers[bookId].startTime) / 1000);
+                    document.getElementById(`${bookId}-timer`).innerText = elapsedTime;
+                }, 1000) };
+            }
+        }
+
+        function finishReading(bookId) {
+            if (timers[bookId]) {
+                clearInterval(timers[bookId].interval);
+                const elapsedTime = Math.floor((Date.now() - timers[bookId].startTime) / 1000);
+                document.getElementById(`${bookId}-timer`).innerText = elapsedTime;
+                updatePoints(bookId, elapsedTime);
+                delete timers[bookId];
+            }
+        }
+
+        function updatePoints(bookId, timeSpent) {
+            let pointsEarned = Math.floor(timeSpent / 10);
+            let userPoints = parseInt(document.getElementById("userPoints").innerText);
+            document.getElementById("userPoints").innerText = userPoints + pointsEarned;
+            alert(`You earned ${pointsEarned} points for reading ${bookId}!`);
+        }
+    </script>
+
+    <script src="bookclub.js"></script>
+    <script src="club.js"></script>
+    <script src="reward.js"></script>
+</body>
+</html>
+
+
+
+             
+
+
+ 
