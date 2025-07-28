@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Dashboard</title>
+  <link rel="icon" href="logo1.jpg" type="image/x-icon">
+  <link rel="icon" type="image/x-icon" href="logo.jpg">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<!-- Header with search bar, profile, and notification bell -->
+<header class="header">
+  <!-- Add this below the header -->
+<div class="profile-section">
+  <img id="profile-pic" src="default-profile.jpg" alt="Profile Picture">
+  <input type="file" id="upload-pic" style="display: none;">
+  <button onclick="document.getElementById('upload-pic').click()">Change Picture</button>
+  
+  <p><strong>Name:</strong> <span id="user-name">Guest</span></p>
+  <button onclick="askForName()">Set Your Name</button>
+  
+  <p><strong>Birthday:</strong> <span id="birthday-display">Not Set</span></p>
+  <input type="date" id="birthday-input" onchange="saveBirthday()">
+</div>
+</script>
+
+    <div class="search-bar">
+      <input type="text" placeholder="Search here....">
+    </div>
+    <div class="header-icons">
+      <span id="welcome-text">Welcome, <span id="display-username">Guest</span>!</span>
+      <button id="profile-button" onclick="toggleProfile()">👤</button>
+  </div>  
+  </header> 
+  <div id="profile-popup" class="popup">
+    <div class="popup-content">
+        <h2>Profile</h2>
+        <label>Name:</label>
+        <input type="text" id="name" placeholder="Enter your name">
+        
+        <label>Bio:</label>
+        <textarea id="bio" placeholder="Write something about yourself"></textarea>
+
+        <label>Date of Birth:</label>
+        <input type="date" id="dob">
+
+        <button onclick="saveProfile()">Save</button>
+    </div>
+</div>
+
+  <audio id="birthday-song">
+    <source src="https://www.fesliyanstudios.com/play-mp3/387" type="audio/mp3">
+    Your browser does not support the audio tag.
+  </audio>  
+
+  </div>   
+  <div class="sidebar">
+    <ul>
+      <li><a href="my circle.html">My Circle</a></li>
+      <li><a href="rewards.html">Rewards</a></li>
+      <li><a href="./my-chat-app/public/chatindex.html">Chat</a></li>
+      <li><a href="help.html">Help</a></li>
+    </ul>
+  </div>
+
+  <div class="content">
+    <h1>My Elder World</h1>
+    <div class="hero">
+      <h1>
+       Join Together, Stay Connected!
+      </h1>
+      <p>
+       Your social life is just a click away!
+      </p>
+      <div class="buttons">
+       <button class="spin-button">Live Events</button>
+       <button class="join">Join the community</button>
+      </div>
+  </div>
+  <!-- Club Carousel Section -->
+<section class="club-carousel-section">
+  <h2><a href="my circle.html">Your Club</a></h2>
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><a href="book.html">📚 Page Turners</a></div> 
+      <div class="swiper-slide"><a href="drawing-club.html">🎨 Canvas Creators</a></div>
+      <div class="swiper-slide"><a href="cooking-club.html">🍽 Cooking Club</a></div>
+      <div class="swiper-slide"><a href="gardening-club.html">🌱 Gardening Club</a></div>
+      <div class="swiper-slide"><a href="club-details.html?club=melody-makers">🎼 Melody Makers</a></div>
+      <div class="swiper-slide"><a href="club-details.html?club=mind-wellness">🧘 Mind & Wellness</a></div>
+      <div class="swiper-slide"><a href="club-details.html?club=travel-tales">🌍 Travel Tales</a></div>
+      <div class="swiper-slide"><a href="club-details.html?club=movie-buffs">🎥 Movie Buffs</a></div>
+      <div class="swiper-slide"><a href="club-details.html?club=craft-diy">✨ Craft & DIY Club</a></div>
+      <div class="swiper-slide"><a href="club-details.html?club=poetry-writing">📝 Poetry & Writing Hub</a></div>
+      <div class="swiper-slide"><a href="club-details.html?club=community-helpers">🤝 Community Helpers</a></div>
+    </div>
+    <!-- Navigation Buttons -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+</section>
+
+    <div class="thought-section">
+      <h2>Thought for the Day</h2>
+      <p id="thought">"Every day is a new opportunity to begin again."</p>
+    </div>
+    <section class="stats-section">
+        <div class="stat-item">
+            <h2 id="members-count">0+</h2>
+            <p>Happy Members</p>
+        </div>
+        <div class="stat-item">
+            <h2 id="events-count">0+</h2>
+            <p>Exciting Events</p>
+        </div>
+        <div class="stat-item">
+            <h2 id="support-count">0</h2>
+            <p>Chat Support</p>
+        </div>
+    </section>
+    </div>
+    <script src="Dashboard.js"></script>
+    <script>
+      window.addEventListener('mouseover', initLandbot, { once: true });
+      window.addEventListener('touchstart', initLandbot, { once: true });
+      var myLandbot;
+      function initLandbot() {
+          if (!myLandbot) {
+              var s = document.createElement('script');
+              s.type = "module";
+              s.async = true;
+              s.addEventListener('load', function() {
+                  var myLandbot = new Landbot.Livechat({
+                      configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-2784171-PNIUIWGM9B2KUDBD/index.json',
+                  });
+              });
+              s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
+              var x = document.getElementsByTagName('script')[0];
+              x.parentNode.insertBefore(s, x);
+          }
+      }
+    </script>
+    <!-- Swiper.js CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<!-- Swiper.js Script -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  // Initialize Swiper
+  var swiper = new Swiper(".swiper-container", {
+    loop: true,
+    slidesPerView: 3,
+    spaceBetween: 10,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
+  });
+</script> 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let savedName = localStorage.getItem("userName");
+    let savedDob = localStorage.getItem("userDob");
+    let today = new Date().toISOString().slice(5, 10); // MM-DD format
+
+    window.onload = function () {
+    const savedName = localStorage.getItem("username");
+
+    if (savedName) {
+        document.getElementById("display-username").textContent = savedName;
+
+        setTimeout(() => {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel(); // Stop any ongoing speech
+                const speech = new SpeechSynthesisUtterance(`Welcome back, ${savedName}! We missed you! Sit back, relax, and enjoy.`);
+                speech.rate = 1;
+                speech.pitch = 1;
+                speechSynthesis.speak(speech);
+            }
+        }, 2000); // Delay ensures other speech events finish
+    }
+};
+
+
+
+    if (savedDob && savedDob.slice(5, 10) === today) {
+        setTimeout(() => {
+            speak();
+        }, 2000);
+    }
+});
+
+function saveProfile() {
+    let name = document.getElementById("name").value.trim();
+    let dob = document.getElementById("dob").value;
+
+    if (name) {
+        localStorage.setItem("userName", name);
+        document.getElementById("display-username").textContent = name;
+        speak(`Profile saved successfully, ${name}!`, "female");
+    }
+    if (dob) {
+        localStorage.setItem("userDob", dob);
+    }
+    document.getElementById("profile-popup").style.display = "none";
+}
+
+// Function to Speak in a Female Voice
+function speak(text) {
+    let synth = window.speechSynthesis;
+    let utterance = new SpeechSynthesisUtterance(text);
+    
+    // 🎵 Make the voice sound sweeter
+    utterance.lang = "en-US";
+    utterance.rate = 0.95;  // Slightly slower for warmth
+    utterance.pitch = 1.4;  // Higher pitch for a sweeter tone
+    utterance.volume = 1.0; // Full volume
+
+    let voices = synth.getVoices();
+    let preferredVoice = voices.find(voice => 
+        voice.name.includes("Google UK English Female") || 
+        voice.name.includes("Microsoft Zira") || 
+        voice.name.includes("Google Assistant")
+    );
+
+    if (preferredVoice) {
+        utterance.voice = preferredVoice;
+    }
+
+    synth.speak(utterance);
+}
+
+
+        synth.speak(utterance);
+    
+
+    // Wait for voices to load before speaking
+    if (synth.getVoices().length > 0) {
+        setVoice();
+    } else {
+        synth.addEventListener("voiceschanged", setVoice);
+    }
+
+
+function playBirthdaySong() {
+    let audio = document.getElementById("birthday-song");
+    audio.play();
+}
+
+function toggleProfile() {
+    let popup = document.getElementById("profile-popup");
+    popup.style.display = popup.style.display === "block" ? "none" : "block";
+}
+</script>
+<style>
+body {
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  background: #007bff;
+  padding: 10px;
+  color: white;
+}
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.popup-content {
+    text-align: center;
+}
+
+.popup input, .popup textarea {
+    width: 100%;
+    margin: 10px 0;
+    padding: 8px;
+}
+
+.popup button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+</style>
+<script>
+  const thoughts = [
+      "Age is just a number; your spirit is timeless.",
+      "Your wisdom is a gift to the world.",
+      "Embrace your journey; it's uniquely yours.",
+      "You are never too old to learn something new.",
+      "Life is a beautiful adventure at any age.",
+      "Your best years are still ahead of you.",
+      "Celebrate everyday; yov've earned it!!.",
+      "Every moment is a chance to shine",
+      "Your journey is just beginning",
+      // You can add more thoughts here
+  ];
+
+  // Get the current date
+  const today = new Date();
+  // Calculate the day of the year (0-365)
+  const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+  // Get the thought of the day based on the day of the year
+  const thoughtOfTheDay = thoughts[dayOfYear % thoughts.length];
+
+  // Display the thought in the HTML
+  document.getElementById('thought').innerText = thoughtOfTheDay;
+</script>   
+</html>       

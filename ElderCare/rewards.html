@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise Reward System</title>
+    <link rel="stylesheet" href="reward.css">
+</head>
+<body>
+
+    <div class="reward-container">
+        <h1>🎉 Your Surprise Reward 🎁</h1>
+        <p>Based on your most active club, you have earned a special surprise reward!</p>
+
+        <div class="club-tracker">
+            <h2>📊 Your Club Activity</h2>
+            <ul id="club-activity">
+                <li>Book Club: <span id="book-points">0</span> pts</li>
+                <li>Gardening Club: <span id="garden-points">0</span> pts</li>
+                <li>Cooking Club: <span id="cooking-points">0</span> pts</li>
+                <li>Drawing Club: <span id="drawing-points">0</span> pts</li>
+            </ul>
+        </div>
+        
+
+        <button id="reveal-reward">Reveal My Reward 🎁</button>
+
+        <div class="reward-box hidden">
+            <h2>Congratulations! 🎊</h2>
+            <p>You have won a <span id="reward-name">???</span> based on your activity in <span id="active-club">???</span>!</p>
+            <button id="claim-reward">Claim Reward 🚀</button>
+        </div>
+
+        <div class="reward-tracking hidden">
+            <h2>🏡 Delivering to:</h2>
+            <input type="text" id="address" placeholder="Enter your address">
+            <button id="track-reward">Track My Reward 📦</button>
+        </div>
+
+        <div id="gold-shower" class="hidden">✨✨✨✨✨</div>
+    </div>
+
+    <script>
+        function updatePoints() {
+            const clubPoints = {
+                book: parseInt(localStorage.getItem('bookClubPoints')) || 0,
+                garden: parseInt(localStorage.getItem('gardeningClubPoints')) || 0,
+                cooking: parseInt(localStorage.getItem('cookingClubPoints')) || 0,
+                drawing: parseInt(localStorage.getItem('drawingClubPoints')) || 0
+            };
+
+            document.getElementById("book-points").innerText = clubPoints.book;
+            document.getElementById("garden-points").innerText = clubPoints.garden;
+            document.getElementById("cooking-points").innerText = clubPoints.cooking;
+            document.getElementById("drawing-points").innerText = clubPoints.drawing;
+
+            let mostActiveClub = "book";
+            let highestPoints = 0;
+
+            for (const club in clubPoints) {
+                if (clubPoints[club] > highestPoints) {
+                    highestPoints = clubPoints[club];
+                    mostActiveClub = club;
+                }
+            }
+
+            const rewards = {
+                book: "Exclusive Book Set",
+                garden: "Gardening Kit",
+                cooking: "Premium Spice Pack",
+                drawing: "Professional Art Supplies"
+            };
+
+            document.getElementById("reveal-reward").addEventListener("click", function() {
+                document.getElementById("reward-name").innerText = rewards[mostActiveClub];
+                document.getElementById("active-club").innerText = mostActiveClub.charAt(0).toUpperCase() + mostActiveClub.slice(1) + " Club";
+                document.querySelector(".reward-box").classList.remove("hidden");
+            });
+        }
+
+        // Update points automatically every second
+        setInterval(updatePoints, 1000);
+        updatePoints();
+
+        document.getElementById("claim-reward").addEventListener("click", function() {
+            document.querySelector(".reward-tracking").classList.remove("hidden");
+        });
+
+        document.getElementById("track-reward").addEventListener("click", function() {
+            const address = document.getElementById("address").value;
+            if (address) {
+                alert(`Your reward will be delivered to: ${address}`);
+                document.getElementById("gold-shower").classList.remove("hidden");
+                setTimeout(() => document.getElementById("gold-shower").classList.add("hidden"), 3000);
+            }
+        });
+    </script>
+</body>
+</html>

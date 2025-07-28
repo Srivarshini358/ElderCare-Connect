@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gardening Club 🌱</title>
+    <link rel="stylesheet" href="gardening-club.css">
+    <script defer src="gardening-club.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🌿 Gardening Club - Earn & Track Points</h1>
+        <p>Complete activities and earn points! Your progress will be saved monthly.</p>
+        <div class="points-container">
+            <p><strong>Your Points:</strong> <span id="userPoints">0</span></p>
+        </div>
+
+        <div class="activity-grid">
+            <div class="activity">
+                <h3>🌳 Adopt & Track a Public Space</h3>
+                <p>Maintain a small garden area.</p>
+                <input type="file" id="photo-public-space">
+                <button onclick="submitActivity('public-space', 50)">Submit & Earn 50 Pts</button>
+            </div>
+
+            <div class="activity">
+                <h3>♻️ Zero-Waste Gardening</h3>
+                <p>Use compost, rainwater, or upcycled planters.</p>
+                <input type="file" id="photo-zero-waste">
+                <button onclick="submitActivity('zero-waste', 20)">Submit & Earn 20 Pts</button>
+            </div>
+
+            <div class="activity">
+                <h3>🌱 Seed Bank Contributor</h3>
+                <p>Donate homegrown seeds.</p>
+                <input type="file" id="photo-seed-bank">
+                <button onclick="submitActivity('seed-bank', 40)">Submit & Earn 40 Pts</button>
+            </div>
+
+            <div class="activity">
+                <h3>📊 Digital Plant Tracker</h3>
+                <p>Log your plant growth journey.</p>
+                <input type="file" id="photo-plant-tracker">
+                <button onclick="submitActivity('plant-tracker', 25)">Submit & Earn 25 Pts</button>
+            </div>
+
+            <div class="activity">
+                <h3>🌍 Climate Warrior</h3>
+                <p>Plant trees or use eco-friendly methods.</p>
+                <input type="file" id="photo-climate-warrior">
+                <button onclick="submitActivity('climate-warrior', 50)">Submit & Earn 50 Pts</button>
+            </div>
+
+            <div class="activity">
+                <h3>🤖 AI Smart Gardening</h3>
+                <p>Upload a plant picture for analysis.</p>
+                <input type="file" id="photo-ai-gardening">
+                <button onclick="submitActivity('ai-gardening', 30)">Submit & Earn 30 Pts</button>
+            </div>
+
+            <div class="activity">
+                <h3>👴 Elder-Youth Mentorship</h3>
+                <p>Mentor a younger gardener.</p>
+                <input type="file" id="photo-mentorship">
+                <button onclick="submitActivity('mentorship', 100)">Submit & Earn 100 Pts</button>
+            </div>
+
+            <div class="activity">
+                <h3>🏆 Monthly Leaderboard Bonus</h3>
+                <p>Top 3 members earn 200 bonus points.</p>
+            </div>
+        </div>
+
+        <h2>🏆 Leaderboard</h2>
+        <ul id="leaderboard-list"></ul>
+
+    </div>
+
+</body>
+</html>
+

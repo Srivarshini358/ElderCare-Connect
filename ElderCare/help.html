@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help & Support</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f8f8f8;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        .faq {
+            margin-bottom: 10px;
+        }
+        .faq button {
+            width: 100%;
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            text-align: left;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .faq-content {
+            display: none;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+        }
+        .contact {
+            margin-top: 20px;
+            padding: 15px;
+            background: #007bff;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .contact a {
+            color: yellow;
+            text-decoration: none;
+        }
+        .contact-form {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .contact-form input, .contact-form textarea, .contact-form button {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .contact-form button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Help & Support</h2>
+        
+        <div class="faq">
+            <button onclick="toggleFAQ(0)">Is there a chat feature?</button>
+            <div class="faq-content">Absolutely! Chat with friends or make new ones!</div>
+        </div>
+
+        <div class="faq">
+            <button onclick="toggleFAQ(1)">How do I find my interests?</button>
+            <div class="faq-content">Explore our interest circles and discover your tribe!</div>
+        </div>
+        
+        <div class="faq">
+            <button onclick="toggleFAQ(2)">Can I get help anytime?</button>
+            <div class="faq-content">Yes! Our help center is open 24/7 for you!</div>
+        </div>
+
+        <div class="contact">
+            <p>Need more help? Contact us:</p>
+            <p>Email: <a href="mailto:support@yourwebsite.com">support@eldercare.com</a></p>
+            <p>Live Chat: <a href="javascript:void(0)" onclick="startLiveChat()">Click here</a></p>
+            <p>Report an Issue: <a href="#contact-form">Submit a report</a></p>
+        </div>
+
+        <div id="contact-form" class="contact-form">
+            <h3>Contact Us</h3>
+            <form onsubmit="submitForm(event)">
+                <input type="text" id="name" placeholder="Your Name" required>
+                <input type="email" id="email" placeholder="Your Email" required>
+                <textarea id="message" placeholder="Your Message" rows="4" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+            <p id="form-response" style="color: green; display: none;">Thank you! We'll get back to you soon.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleFAQ(index) {
+            let content = document.getElementsByClassName("faq-content")[index];
+            content.style.display = content.style.display === "block" ? "none" : "block";
+        }
+
+        function startLiveChat() {
+            alert("Use the ChatBot for further quieries");
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            document.getElementById("form-response").style.display = "block";
+        }
+    </script>
+</body>
+</html>

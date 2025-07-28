@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Creators</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #d396ef, #eae4eb);
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 20px;
+        }
+        .upload-section, .gallery, .marketplace {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .upload-section { flex: 1; }
+        .gallery, .marketplace { flex: 2; }
+        button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover { background: #ff4f4f; }
+        .art-item {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: #fff;
+        }
+        .marketplace-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        input, textarea {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .like-btn { background: #4CAF50; margin-left: 10px; }
+        .like-btn:hover { background: #45a049; }
+        .comment-section { margin-top: 10px; }
+        .points-section, .leaderboard {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        th { background: #ff5f6d; color: white; }
+        .highlight { color: #ff5f6d; font-weight: bold; }
+        img { width: 200px; border-radius: 10px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>🎨 Welcome to Digital Art Hub 🎨</h1>
+    <h2>Showcase, Sell & Enhance Your Art!</h2>
+    
+    <div class="container">
+        <div class="upload-section">
+            <h3>📤 Upload Your Artwork</h3>
+            <input type="file" id="artUpload" accept="image/*">
+            <button id="uploadArt">Upload</button> <!-- Fix button ID here -->
+        </div>
+    </div>
+    
+        
+        <div class="gallery">
+            <h3>🖼️ Art Gallery</h3>
+            <div>
+                ❤️ Likes: <span id="like-count">0</span>  
+                💬 Comments: <span id="comment-count">0</span>  
+                <button id="like-button">👍 Like</button>  
+                <input type="text" id="comment-input" placeholder="Write a comment">
+                <button id="comment-button">💬 Comment</button>  
+            </div>
+</div>
+            </div>
+        </div>
+        </div>
+        
+        <div class="marketplace">
+            <h3>💰 Art Marketplace</h3>
+            <div class="marketplace-form">
+                <input type="text" id="artTitle" placeholder="Artwork Title">
+                <textarea id="artDescription" placeholder="Description"></textarea>
+                <input type="text" id="artistName" placeholder="Artist Name">
+                <input type="text" id="artPrice" placeholder="Price (USD)">
+                <input type="email" id="buyerEmail" placeholder="Your Email for Contact">
+                <input type="text" id="buyerAddress" placeholder="Buyer Address">
+                <select id="paymentMethod">
+                    <option value="paypal">PayPal</option>
+                    <option value="bank">Bank Transfer</option>
+                </select>
+                <button onclick="listArtwork()">List for Sale</button>
+            </div>
+            <div id="artMarketplace"></div>
+        </div>
+    </div>
+
+    <div class="points-section">
+        <h3 id="pointsDisplay">Your Points: 0</h3>
+        <button id="uploadBtn">Upload Artwork (+10)</button>
+        <button id="likeBtn">Get Like (+2)</button>
+        <button id="commentBtn">Receive Comment (+3)</button>
+        <button id="sellBtn">Sell Artwork (+20)</button>        
+    </div>
+
+    <div class="leaderboard">
+        <h2>🏆 Top Artists Leaderboard 🏆</h2>
+        <table>
+            <thead>
+                <tr><th>Rank</th><th>Artist</th><th>Points</th></tr>
+            </thead>
+            <tbody id="leaderboardBody"></tbody>
+        </table>
+        <p>Your Points: <span id="userPoints">0</span></p>
+
+    </div>
+    <script>
+        if (!localStorage.getItem("userPoints")) {
+    localStorage.setItem("userPoints", "0");
+}
+function updatePointsDisplay() {
+    document.getElementById("userPoints").innerText = localStorage.getItem("userPoints");
+}
+window.onload = updatePointsDisplay;
+
+        function uploadArt() {
+            const fileInput = document.getElementById('artUpload');
+            const gallery = document.getElementById('artGallery');
+            
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('art-item');
+                    gallery.appendChild(img);
+                    addPoints(10);
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function listArtwork() {
+            const title = document.getElementById('artTitle').value;
+            const artist = document.getElementById('artistName').value;
+            const price = document.getElementById('artPrice').value;
+            const marketplace = document.getElementById('artMarketplace');
+
+            if (title && artist && price) {
+                const artItem = document.createElement('div');
+                artItem.classList.add('art-item');
+                artItem.innerHTML = `<h4>${title}</h4><p><strong>Artist:</strong> ${artist}</p><p><strong>Price:</strong> $${price}</p>
+                <button class='like-btn' onclick='likeArt(this)'>❤️ Like</button>
+                <div class='comment-section'><input type='text' placeholder='Add a comment'><button onclick='addComment(this)'>Post</button></div>`;
+                marketplace.appendChild(artItem);
+                addPoints(20);
+            } else {
+                alert('Please fill in all fields!');
+            }
+        }
+
+        function likeArt(button) {
+            button.innerText = `❤️ ${parseInt(button.innerText.split(' ')[1] || 0) + 1} Likes`;
+            addPoints(2);
+        }
+
+        function addComment(button) {
+            const commentInput = button.previousElementSibling;
+            if (commentInput.value) {
+                const commentDiv = document.createElement('p');
+                commentDiv.innerText = commentInput.value;
+                button.parentElement.appendChild(commentDiv);
+                commentInput.value = '';
+                addPoints(3);
+            }
+        }
+
+        function addPoints(points) {
+            let userPoints = parseInt(localStorage.getItem("userPoints") || 0);
+            userPoints += points;
+            localStorage.setItem("userPoints", userPoints);
+            document.getElementById("userPoints").innerText = userPoints;
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+    let likeCount = parseInt(localStorage.getItem("drawingClubLikes")) || 0;
+    let commentCount = parseInt(localStorage.getItem("drawingClubComments")) || 0;
+    let userPoints = parseInt(localStorage.getItem("drawingClubPoints")) || 0;
+
+    document.getElementById("uploadArt").addEventListener("click", function () {
+    let points = parseInt(localStorage.getItem("userPoints")) || 0;
+    points += 10;
+    localStorage.setItem("userPoints", points);
+    updatePointsDisplay();
+});
+function addLikePoints() {
+    let points = parseInt(localStorage.getItem("userPoints")) || 0;
+    points += 2;
+    localStorage.setItem("userPoints", points);
+    updatePointsDisplay();
+}
+function addCommentPoints() {
+    let points = parseInt(localStorage.getItem("userPoints")) || 0;
+    points += 3;
+    localStorage.setItem("userPoints", points);
+    updatePointsDisplay();
+}
+document.getElementById("sellArtwork").addEventListener("click", function () {
+    let points = parseInt(localStorage.getItem("userPoints")) || 0;
+    points += 20;
+    localStorage.setItem("userPoints", points);
+    updatePointsDisplay();
+});
+
+
+
+
+
+    document.getElementById("comment-button").addEventListener("click", function () {
+        let commentInput = document.getElementById("comment-input").value.trim();
+        if (commentInput !== "") {
+            commentCount++;
+            userPoints += 3;
+            localStorage.setItem("drawingClubComments", commentCount);
+            localStorage.setItem("drawingClubPoints", userPoints);
+            document.getElementById("comment-count").textContent = commentCount;
+            document.getElementById("user-points").textContent = userPoints;
+            document.getElementById("comment-input").value = "";
+        }
+    });
+});
+let userPoints = localStorage.getItem("userPoints") ? parseInt(localStorage.getItem("userPoints")) : 0;
+document.getElementById("pointsDisplay").textContent = `Your Points: ${userPoints}`;
+
+function updatePoints(points) {
+    userPoints += points;
+    document.getElementById("pointsDisplay").textContent = `Your Points: ${userPoints}`;
+    localStorage.setItem("userPoints", userPoints);
+}
+
+// Attach event listener to the button (Fix button ID here)
+let userPoint = 0; // Always start from 0
+document.getElementById("uploadArt").addEventListener("click", function() {
+    let fileInput = document.getElementById("artUpload");
+    if (fileInput.files.length > 0) {
+        updatePoints(10); // ✅ Add 10 points when an image is uploaded
+        alert("Artwork uploaded! +10 points 🎨");
+    } else {
+        alert("Please select a file first!");
+    }
+});
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

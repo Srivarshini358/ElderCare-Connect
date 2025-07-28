@@ -1,0 +1,16 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(to right, #59beea, #c4fae7); /* Gradient background */
+}
+
+
+.points-tracker {
+    font-size: 20px;
+    margin-top: 20px;
+    color: rgb(57, 2, 29);
+}
+
