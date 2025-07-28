@@ -1,55 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elder Support Hub</title>
-    <link rel="icon" href="logo1.jpg" type="image/x-icon">
-    <link rel="icon" type="image/x-icon" href="logo.jpg">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <nav>
-            <div class="container">
-            </div>
-        </nav>
-    </header>
-    <main>
-        <section class="hero">
-            <div class="container">
-                <h1>Elder Connection</h1>
-                <p>Unleashing the Power of Community for Our Beloved Elders!</p>
-                <a href="login.html" class="get-started">Get Started</a>
-            </div>
-        </section>
-    </main>
- 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Elder Support Hub. All Rights Reserved.</p>
-        </div>
-    </footer>
-     <!-- Chatbot Embed Code -->
-     <script>
-        window.addEventListener('mouseover', initLandbot, { once: true });
-        window.addEventListener('touchstart', initLandbot, { once: true });
-        var myLandbot;
-        function initLandbot() {
-            if (!myLandbot) {
-                var s = document.createElement('script');
-                s.type = "module";
-                s.async = true;
-                s.addEventListener('load', function() {
-                    var myLandbot = new Landbot.Livechat({
-                        configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-2784171-PNIUIWGM9B2KUDBD/index.json',
-                    });
-                });
-                s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
-                var x = document.getElementsByTagName('script')[0];
-                x.parentNode.insertBefore(s, x);
-            }
-        }
-    </script>
-</body>
-</html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+			integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk="
+			crossorigin="anonymous"
+		/>
+		<link rel="stylesheet" href="./css/style.css" />
+		<title>Chat</title>
+	</head>
+	<body>
+		<div class="join-container"> 
+			<header class="join-header">
+				<h1><i class="fas fa-smile"></i>Chat</h1>
+			</header>
+			<main class="join-main">
+				<form action="./chat.html">
+					<div class="form-control">
+						<label for="username">Username</label>
+						<input
+							type="text"
+							name="username"
+							id="username"
+							placeholder="Enter username..."
+							required
+						/> 
+					</div>
+					<div class="form-control">
+						<label for="room">Room</label>
+						<select name="room" id="room">
+							<option value="Heart-to-Heart">Heart-to-Heart ❤️</option>
+							<option value="Interest-Based">Interest-Based 😊</option>
+							<option value="Wisdom Circle">Wisdom Circle 📖</option>
+							<option value="Mindful Moments">Mindful Moments 🧘</option>
+							<option value="The Laughter Lounge">The Laughter Lounge 😂</option>
+							<option value="Golden Memories">Golden Memories ✨</option>
+						</select>
+					</div>
+					<button type="submit" class="btn">Join Chat</button>
+				</form>
+			</main>
+		</div>
+	</body>
+</html> 
